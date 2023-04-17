@@ -6,7 +6,7 @@
 
 using namespace std;
 
-class Ville
+class Ville : public Waypoint
 {
 private:
     /* data */

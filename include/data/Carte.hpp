@@ -3,6 +3,8 @@
 
 #include "Ville.h"
 #include "Waypoint.h"
+#include "Route.h"
+#include "Contour.h"
 
 class Carte
 {
@@ -16,7 +18,7 @@ public:
     vector<Route> getRoutes();
     vector<string> getnomsVilles();
     void ajoutUnWaypoint(Waypoint);
-    void ajourUneRoute(Route);
+    void ajoutUneRoute(Route);
     void insereUneVille(Ville*);
     void affiche();
     ~Carte();
