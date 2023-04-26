@@ -21,7 +21,7 @@ public:
     void ajoutUneRoute(Route);
     void insereUneVille(Ville*);
     void affiche();
-    ~Carte();
+    ~Carte(){};
 };
 
 

@@ -15,11 +15,13 @@ private:
     string site;
 public:
     Ville(/* args */);
-    string getSite();
+    string getSite(){
+        return site;
+    };
     bool isVille();
     string getInfos();
     void affiche();
-    ~Ville();
+    ~Ville(){};
 };
 
 

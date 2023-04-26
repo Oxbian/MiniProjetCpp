@@ -16,12 +16,18 @@ private:
     int distance;
 public:
     Route(/* args */);
-    int getIDeb();
-    int getIFin();
-    int getDistance();
+    int getIDeb(){
+        return i_deb;
+    };
+    int getIFin(){
+        return i_fin;
+    };
+    int getDistance(){
+        return distance;
+    };
     string getInfos();
     void affiche();
-    ~Route();
+    ~Route(){};
 };
 
 

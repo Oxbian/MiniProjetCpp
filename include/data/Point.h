@@ -15,9 +15,14 @@ private:
     float lat;
 public:
     Point(/* args */);
-    float getLon();
-    float getLat();
-    ~Point();
+    float getLon(){
+        return lon;
+    };
+
+    float getLat(){
+        return lat;
+    };
+    ~Point(){};
 };
 
 

@@ -17,7 +17,7 @@ public:
     Contour(/* args */);
     vector<Point> getPoints();
     void ajoutUnPoint(Point);
-    ~Contour();
+    ~Contour(){};
 };
 
 

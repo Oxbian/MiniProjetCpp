@@ -15,13 +15,19 @@ private:
     float lat;
 public:
     Waypoint(/* args */);
-    string getNom();
-    float getLon();
-    float getLat();
+    string getNom(){
+        return nom;
+    };
+    float getLon(){
+        return lon;
+    };
+    float getLat(){
+        return lat;
+    };
     virtual bool isVille();
     string getInfos();
     void affiche();
-    ~Waypoint();
+    ~Waypoint(){};
 };
 
 
