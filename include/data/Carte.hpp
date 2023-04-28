@@ -1,6 +1,10 @@
 #ifndef CARTE_HPP
 #define CARTE_HPP
 
+#include <iostream>
+//#include <mysql.h>
+//#include <mysqlx/xdevapi.h>
+
 #include "Ville.h"
 #include "Waypoint.h"
 #include "Route.h"

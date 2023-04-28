@@ -5,5 +5,5 @@ string getInfos(){
 }
 
 void affiche(){
-
+    
 }
