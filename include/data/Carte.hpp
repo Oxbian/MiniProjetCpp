@@ -1,33 +1,38 @@
 #ifndef CARTE_HPP
 #define CARTE_HPP
 
-#include <iostream>
-//#include <mysql.h>
-//#include <mysqlx/xdevapi.h>
+/* Importation des headers nécessaires */
+#include <vector>
+#include <string>
 
-#include "Ville.h"
-#include "Waypoint.h"
-#include "Route.h"
-#include "Contour.h"
+#include "Ville.hpp"
+#include "Waypoint.hpp"
+#include "Route.hpp"
+#include "Contour.hpp"
 
+/* Classe Carte */
 class Carte
 {
+
 private:
-    /* data */
+    Contour contour;
+    std::vector<Waypoint *> waypoints;
+    std::vector<Route> routes;
+
 public:
-    Carte(/* args */);
+    Carte(Waypoint *waypoint_1, Waypoint *waypoint_2, Route route, Contour contour);
+    ~Carte(){};
+
     Contour getContour();
     float getEchelleLon();
-    vector<Waypoint*> getWaypoints();
-    vector<Route> getRoutes();
-    vector<string> getnomsVilles();
-    void ajoutUnWaypoint(Waypoint);
-    void ajoutUneRoute(Route);
-    void insereUneVille(Ville*);
+    std::vector<Waypoint *> getWaypoints();
+    std::vector<Route> getRoutes();
+    std::vector<std::string> getnomsVilles();
+    void ajoutUnWaypoint(Waypoint waypoint);
+    void ajoutUneRoute(Route route);
+    void insereUneVille(Ville *ville);
     void affiche();
-    ~Carte(){};
+
 };
 
-
 #endif // CARTE_HPP
-// test
