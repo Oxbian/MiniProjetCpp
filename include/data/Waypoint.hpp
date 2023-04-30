@@ -16,7 +16,7 @@ private:
 
 public:
     Waypoint(std::string nom, float lon, float lat);
-    ~Waypoint(){};
+    virtual ~Waypoint(){};
     
     std::string getNom();
     float getLon();

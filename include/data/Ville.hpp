@@ -17,7 +17,7 @@ private:
 
 public:
     Ville(Waypoint waypoint, std::string code_postal, int nb_habitants, std::string site);
-    ~Ville(){};
+    virtual ~Ville(){};
 
     std::string getSite();
     bool isVille() override;

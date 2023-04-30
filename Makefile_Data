@@ -1,0 +1,13 @@
+INCLUDE := -Iinclude/data
+
+all: testBdd libBDD.a
+libBdd.a: Bdd.o
+	ar rUuv libBDD.a Bdd.o
+testBdd: testBdd.o Bdd.o
+	g++ testBdd.o Bdd.o -lmysqlcppconn -o testBdd $(INCLUDE)
+testBdd.o: src/data/testBdd.cpp
+	g++ -std=c++11 -Wall -c src/data/testBdd.cpp $(INCLUDE)
+Bdd.o: src/data/Bdd.cpp
+	g++ -fPIE -std=c++11 -c src/data/Bdd.cpp $(INCLUDE)
+clean: 
+	rm *.o testBdd
