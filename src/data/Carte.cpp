@@ -16,6 +16,19 @@ Carte::Carte(Waypoint *waypoint_1, Waypoint *waypoint_2, Route route, Contour co
 }
 
 /**
+ * @brief Constructeur de la carte
+ * @param waypoints Liste de waypoints de la carte
+ * @param routes Liste de route de la carte
+ * @param contour Contour de la carte
+ */
+Carte::Carte(std::vector<Waypoint *> waypoints, std::vector<Route> routes, Contour contour)
+{
+    this->waypoints = waypoints;
+    this->routes = routes;
+    this->contour = contour;
+}
+
+/**
  * @brief Getter du contour de la carte
  * @return Contour de la carte
  */

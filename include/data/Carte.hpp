@@ -20,6 +20,7 @@ private:
     std::vector<Route> routes;
 
 public:
+    Carte(std::vector<Waypoint *> waypoints, std::vector<Route> routes, Contour contour);
     Carte(Waypoint *waypoint_1, Waypoint *waypoint_2, Route route, Contour contour);
     ~Carte(){};
 
@@ -32,7 +33,6 @@ public:
     void ajoutUneRoute(Route route);
     void insereUneVille(Ville *ville);
     void affiche();
-
 };
 
 #endif // CARTE_HPP
