@@ -20,3 +20,5 @@ Et enfin pour lancer le programme:
   
 `./MiniProjetCPP`  
 
+## TODO:
+- Connexion BDD (fenêtre pour se connecter / pas de connexion en durs)

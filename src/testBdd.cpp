@@ -3,8 +3,9 @@
 int main (int argc, char *argv[]) 
 {
 	try {
-		Bdd bdd("localhost", "miniprojet", "miniprojet", "miniprojet");
+		Bdd bdd("tcp://localhost:3306", "miniprojet", "miniprojet", "miniprojet");
 		Carte carte = bdd.creerCarte();
+		std::cout << "Carte créée" << std::endl;
 		carte.affiche();
 	}
 	catch (sql::SQLException &e) {
@@ -13,8 +14,7 @@ int main (int argc, char *argv[])
 		std::cout << ", SQLState: " << e.getSQLState() << " )" << std::endl;
 	}
 	catch(...){
-		std::cout << "Exception non trappée"<<std::endl;
+		std::cout << "Exception non trappée" <<std::endl;
 	}
-
 	return EXIT_SUCCESS;
 }

@@ -52,10 +52,9 @@ std::vector<Waypoint *> Bdd::creerWaypoints()
 {
     sql::Statement *stmt = this->conn->createStatement();
     sql::ResultSet *res = stmt->executeQuery("SELECT * FROM waypoint");
-    std::vector<Waypoint *> waypoints;
+    std::vector<Waypoint*> waypoints;
     while (res->next()) {
-        Waypoint *waypoint = new Waypoint(res->getString(1), res->getDouble(2), res->getDouble(3));
-        waypoints.push_back(waypoint);
+        waypoints.push_back(new Waypoint(res->getString(1), res->getDouble(2), res->getDouble(3)));
     }
     delete res;
     delete stmt;
@@ -77,8 +76,9 @@ void Bdd::creerVilles(std::vector<Waypoint *> waypoints)
             std::cout << "Erreur : ville non trouvée" << std::endl;
             return;
         }
-        Ville ville (*waypoints.at(id), nom, res->getInt(2), res->getString(3));
-        waypoints[id] = &ville;
+        std::cout << "Id: " << id << std::endl;
+        Ville *ville = new Ville(*(waypoints.at(id)), nom, res->getInt(2), res->getString(3));
+        waypoints.at(id) = ville;
     }
 }
 

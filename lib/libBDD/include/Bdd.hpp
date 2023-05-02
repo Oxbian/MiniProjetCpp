@@ -28,16 +28,16 @@ private:
 	sql::Connection *conn;
 
 public:
-	Bdd();
 	Bdd(std::string host, std::string database, std::string user, std::string password);
+	Bdd(){};
 	~Bdd();
-
 	Contour creerContour();
 	std::vector<Waypoint *> creerWaypoints();
 	void creerVilles(std::vector<Waypoint *> waypoints);
 	std::vector<Route> creerRoute(std::vector<Waypoint *> waypoints);
 	Carte creerCarte();
 	int getId(std::string nom, std::vector<Waypoint *> waypoints);
+
 };
 
 #endif // BDD_HPP

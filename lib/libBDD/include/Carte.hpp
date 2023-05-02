@@ -4,6 +4,7 @@
 /* Importation des headers nécessaires */
 #include <vector>
 #include <string>
+#include <cmath>
 
 #include "Ville.hpp"
 #include "Waypoint.hpp"
@@ -22,8 +23,8 @@ private:
 public:
     Carte(std::vector<Waypoint *> waypoints, std::vector<Route> routes, Contour contour);
     Carte(Waypoint *waypoint_1, Waypoint *waypoint_2, Route route, Contour contour);
+    Carte(){};
     ~Carte(){};
-
     Contour getContour();
     float getEchelleLon();
     std::vector<Waypoint *> getWaypoints();
