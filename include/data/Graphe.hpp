@@ -11,8 +11,8 @@ class Graphe
 {
 
 public:
-    Graphe();
-    ~Graphe();
+    Graphe(){};
+    ~Graphe(){};
 
     std::vector<int> voisins(int waypoint_id);
     float distance(int waypoint_1, int waypoint_2);

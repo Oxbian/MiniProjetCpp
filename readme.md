@@ -1,7 +1,7 @@
 # Mini-Projet C++
 
 Ce repo git contient notre version du miniprojet du cours de C++ de l'ISEN.
-Ce mini projet à pour but de créer une carte sur QT et d'afficher le chemin le plus court entre 2 villes de Bretagne.
+Ce mini projet a pour but de créer une carte sur QT et d'afficher le chemin le plus court entre 2 villes de Bretagne.
 
 ## Compilation & utilisation
 
@@ -15,7 +15,7 @@ Puis il faudra ajouter la base de donnée à votre mysql.
 `sudo mysql`
 `source assets/sql/adduser.sql`
 
-Normalement si tout se passe bien vous devrez avoir une bdd au nom de miniprojet et qui contient les tables contour, route, ville, waypoint.
+Normalement si tout se passe bien vous devriez avoir une bdd au nom de miniprojet et qui contient les tables contour, route, ville, waypoint.
 Et enfin pour lancer le programme:  
   
 `./MiniProjetCPP`  
