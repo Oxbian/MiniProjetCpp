@@ -14,6 +14,7 @@ public:
     Graphe(){};
     ~Graphe(){};
 
+public:
     std::vector<int> voisins(int waypoint_id);
     float distance(int waypoint_1, int waypoint_2);
     std::vector<Route> plus_court_chemin(int waypoint_1, int waypoint_2);

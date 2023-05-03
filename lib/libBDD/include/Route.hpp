@@ -17,6 +17,8 @@ private:
 public:
     Route(int i_deb, int i_fin, int distance);
     ~Route(){};
+
+public:
     int getIDeb();
     int getIFin();
     int getDistance();

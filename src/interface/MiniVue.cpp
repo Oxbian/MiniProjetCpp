@@ -2,8 +2,8 @@
 
 /**
  * @brief Constructeur de MiniVue
- * @param scene 
- * @param w 
+ * @param scene Scène à afficher dans la minivue
+ * @param w Pointeur vers le widget parent
  */
 MiniVue::MiniVue(SceneCarte *scene, QWidget *w): QGraphicsView(scene, w)
 {
@@ -13,7 +13,7 @@ MiniVue::MiniVue(SceneCarte *scene, QWidget *w): QGraphicsView(scene, w)
 
 /**
  * @brief Fonction qui s'assure que lors du zoom on l'affichage reste dans la fenêtre
- * @param event 
+ * @param event Event de resize
  */
 void MiniVue::resizeEvent(QResizeEvent *event)
 {
@@ -24,13 +24,13 @@ void MiniVue::resizeEvent(QResizeEvent *event)
 
 /**
  * @brief Fonction qui dessine la zone de zoom de Grande Vue
- * @param painter 
- * @param  
+ * @param painter Painter pour dessiner
+ * @param zoomed_zone Zone de zoom de Grande Vue
  */
-void MiniVue::drawForeground(QPainter *painter, const QRectF &)
+void MiniVue::drawForeground(QPainter *painter, const QRectF &zoomed_zone)
 {
     painter->setPen(QPen(Qt::black, 0));
-    painter->drawRect(zoomed_zone);
+    painter->drawRect(this->zoomed_zone);
 }
 
 /**

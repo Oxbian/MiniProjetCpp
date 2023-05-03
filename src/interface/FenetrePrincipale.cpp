@@ -2,9 +2,10 @@
 
 /**
  * @brief Contructeur de la FenetrePrincipale
- * @param parent 
+ * @param carte Référence vers la carte à afficher
+ * @param parent Pointeur vers le widget parent (null)
  */
-FenetrePrincipale::FenetrePrincipale(QWidget *parent): QMainWindow(parent)
+FenetrePrincipale::FenetrePrincipale(Carte &carte, QWidget *parent): QMainWindow(parent)
 {
     this->setWindowTitle("Itinéraire");
     this->setMinimumSize(WIDTH, HEIGHT);
@@ -16,7 +17,7 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent): QMainWindow(parent)
     this->setCentralWidget(central_widget);
 
     /* Ajout des éléments de la fenêtre, avec la scène et les vues */
-    this->scene = new SceneCarte();
+    this->scene = new SceneCarte(carte);
     this->great_view = new GrandeVue(this->scene, this, 1);
     layout->addWidget(createLeftSide());
     layout->addWidget(this->great_view);
@@ -31,7 +32,7 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent): QMainWindow(parent)
 
 /**
  * @brief Fonction pour construire les éléments de la partie gauche de la fenêtre
- * @return 
+ * @return Le groupbox des éléments de la partie gauche de la fenêtre
  */
 QGroupBox *FenetrePrincipale::createLeftSide()
 {
@@ -63,7 +64,7 @@ QGroupBox *FenetrePrincipale::createLeftSide()
 
 /**
  * @brief Fonction pour afficher les coordonnées de notre zone zoomée
- * @param pos 
+ * @param pos Position à affichée
  */
 void FenetrePrincipale::affiche_pos_scene(QPointF pos)
 {

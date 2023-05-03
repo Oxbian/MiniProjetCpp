@@ -25,6 +25,8 @@ public:
     Carte(Waypoint *waypoint_1, Waypoint *waypoint_2, Route route, Contour contour);
     Carte(){};
     ~Carte(){};
+
+public:
     Contour getContour();
     float getEchelleLon();
     std::vector<Waypoint *> getWaypoints();

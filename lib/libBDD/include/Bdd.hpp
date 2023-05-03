@@ -31,6 +31,8 @@ public:
 	Bdd(std::string host, std::string database, std::string user, std::string password);
 	Bdd(){};
 	~Bdd();
+
+public:
 	Contour creerContour();
 	std::vector<Waypoint *> creerWaypoints();
 	void creerVilles(std::vector<Waypoint *> waypoints);

@@ -13,6 +13,8 @@ private:
 public:
     Point(int num, float lon, float lat);
     ~Point(){};
+
+public:
     float getLon();
     float getLat();
 

@@ -2,9 +2,9 @@
 
 /**
  * @brief Constructeur de GrandeVue
- * @param scene 
- * @param w 
- * @param orientation_nord 
+ * @param scene Scène à afficher dans la vue
+ * @param w Pointeur du widget parent
+ * @param orientation_nord Int pour indiquer l'orientation du nord
  */
 GrandeVue::GrandeVue(SceneCarte *scene, QWidget *w, int orientation_nord): 
 QGraphicsView(scene, w), orientation_nord(orientation_nord)
@@ -17,7 +17,7 @@ QGraphicsView(scene, w), orientation_nord(orientation_nord)
 
 /**
  * @brief Fonction qui s'assure que lors du zoom on l'affichage reste dans la fenêtre
- * @param event 
+ * @param event Event de resize
  */
 void GrandeVue::resizeEvent(QResizeEvent *event)
 {
@@ -28,7 +28,7 @@ void GrandeVue::resizeEvent(QResizeEvent *event)
 
 /**
  * @brief Fonction qui gère l'event de zoom
- * @param event 
+ * @param event Event de zoom
  */
 void GrandeVue::wheelEvent(QWheelEvent *event) 
 {
@@ -45,7 +45,7 @@ void GrandeVue::wheelEvent(QWheelEvent *event)
 
 /**
  * @brief Fonction qui permet d'avoir la taille de la zone zoomée
- * @param event 
+ * @param event Event de paint
  */
 void GrandeVue::paintEvent(QPaintEvent *event)
 {
@@ -61,7 +61,7 @@ void GrandeVue::paintEvent(QPaintEvent *event)
 
 /**
  * @brief Fonction qui permet d'avoir la position de la zone zoomée
- * @param event 
+ * @param event Event de mouvement de souris
  */
 void GrandeVue::mouseMoveEvent(QMouseEvent *event)
 {
@@ -74,12 +74,13 @@ void GrandeVue::mouseMoveEvent(QMouseEvent *event)
 
 /**
  * @brief Fonction pour dessiner la flèche d'orientation sur la carte
- * @param painter 
- * @param zoomed_zone 
+ * @param painter Zone de dessin
+ * @param zoomed_zone Zone zoomée
  */
-void GrandeVue::drawBackground(QPainter *painter, const QRectF &)
+void GrandeVue::drawBackground(QPainter *painter, const QRectF &zoomed_zone)
 {
     painter->setWorldMatrixEnabled(false); // mettre en coords View (pixels)
+
     // Chargement image et rotation selon orientation plan
     QPixmap pixmap("assets/image/north.png");
     QTransform matrice;
@@ -92,10 +93,10 @@ void GrandeVue::drawBackground(QPainter *painter, const QRectF &)
 
 /**
  * @brief Fonction pour dessiner l'échelle sur la carte
- * @param painter 
- * @param  
+ * @param painter Zone de dessin
+ * @param zoomed_zone Zone zoomée
  */
-void GrandeVue::drawForeground(QPainter *painter, const QRectF &)
+void GrandeVue::drawForeground(QPainter *painter, const QRectF &zoomed_zone)
 {
     painter->setWorldMatrixEnabled(false);// mettre en coords View (pixels)
     painter->setPen(QPen(Qt::black, 0));

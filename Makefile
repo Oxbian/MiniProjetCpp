@@ -17,7 +17,7 @@ CXX           = g++
 DEFINES       = -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -std=c++14 -O2 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I. -I include -I include/interface -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+INCPATH       = -I. -I. -Iinclude -Iinclude/interface -Ilib/libBDD/include -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
 QMAKE         = /usr/lib/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = MiniProjetCpp1.0.0
 DISTDIR = /home/kali/Documents/Qt/MiniProjetCpp/.tmp/MiniProjetCpp1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
-LIBS          = $(SUBLIBS) /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Core.so -lGL -lpthread   
+LIBS          = $(SUBLIBS) lib/libBDD/libBDD.a -lmysqlcppconn /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Core.so -lGL -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -375,28 +375,52 @@ compiler_moc_header_clean:
 	-$(DEL_FILE) moc_FenetrePrincipale.cpp moc_GrandeVue.cpp moc_MiniVue.cpp moc_SceneCarte.cpp
 moc_FenetrePrincipale.cpp: include/interface/FenetrePrincipale.hpp \
 		include/interface/SceneCarte.hpp \
+		lib/libBDD/include/Carte.hpp \
+		lib/libBDD/include/Ville.hpp \
+		lib/libBDD/include/Waypoint.hpp \
+		lib/libBDD/include/Route.hpp \
+		lib/libBDD/include/Contour.hpp \
+		lib/libBDD/include/Point.hpp \
 		include/interface/MiniVue.hpp \
 		include/interface/GrandeVue.hpp \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/kali/Documents/Qt/MiniProjetCpp/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp/include -I/home/kali/Documents/Qt/MiniProjetCpp/include/interface -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include include/interface/FenetrePrincipale.hpp -o moc_FenetrePrincipale.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/kali/Documents/Qt/MiniProjetCpp/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp/include -I/home/kali/Documents/Qt/MiniProjetCpp/include/interface -I/home/kali/Documents/Qt/MiniProjetCpp/lib/libBDD/include -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include include/interface/FenetrePrincipale.hpp -o moc_FenetrePrincipale.cpp
 
 moc_GrandeVue.cpp: include/interface/GrandeVue.hpp \
 		include/interface/SceneCarte.hpp \
+		lib/libBDD/include/Carte.hpp \
+		lib/libBDD/include/Ville.hpp \
+		lib/libBDD/include/Waypoint.hpp \
+		lib/libBDD/include/Route.hpp \
+		lib/libBDD/include/Contour.hpp \
+		lib/libBDD/include/Point.hpp \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/kali/Documents/Qt/MiniProjetCpp/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp/include -I/home/kali/Documents/Qt/MiniProjetCpp/include/interface -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include include/interface/GrandeVue.hpp -o moc_GrandeVue.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/kali/Documents/Qt/MiniProjetCpp/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp/include -I/home/kali/Documents/Qt/MiniProjetCpp/include/interface -I/home/kali/Documents/Qt/MiniProjetCpp/lib/libBDD/include -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include include/interface/GrandeVue.hpp -o moc_GrandeVue.cpp
 
 moc_MiniVue.cpp: include/interface/MiniVue.hpp \
 		include/interface/SceneCarte.hpp \
+		lib/libBDD/include/Carte.hpp \
+		lib/libBDD/include/Ville.hpp \
+		lib/libBDD/include/Waypoint.hpp \
+		lib/libBDD/include/Route.hpp \
+		lib/libBDD/include/Contour.hpp \
+		lib/libBDD/include/Point.hpp \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/kali/Documents/Qt/MiniProjetCpp/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp/include -I/home/kali/Documents/Qt/MiniProjetCpp/include/interface -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include include/interface/MiniVue.hpp -o moc_MiniVue.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/kali/Documents/Qt/MiniProjetCpp/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp/include -I/home/kali/Documents/Qt/MiniProjetCpp/include/interface -I/home/kali/Documents/Qt/MiniProjetCpp/lib/libBDD/include -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include include/interface/MiniVue.hpp -o moc_MiniVue.cpp
 
 moc_SceneCarte.cpp: include/interface/SceneCarte.hpp \
+		lib/libBDD/include/Carte.hpp \
+		lib/libBDD/include/Ville.hpp \
+		lib/libBDD/include/Waypoint.hpp \
+		lib/libBDD/include/Route.hpp \
+		lib/libBDD/include/Contour.hpp \
+		lib/libBDD/include/Point.hpp \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/kali/Documents/Qt/MiniProjetCpp/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp/include -I/home/kali/Documents/Qt/MiniProjetCpp/include/interface -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include include/interface/SceneCarte.hpp -o moc_SceneCarte.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/kali/Documents/Qt/MiniProjetCpp/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp/include -I/home/kali/Documents/Qt/MiniProjetCpp/include/interface -I/home/kali/Documents/Qt/MiniProjetCpp/lib/libBDD/include -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include include/interface/SceneCarte.hpp -o moc_SceneCarte.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -416,25 +440,56 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 
 FenetrePrincipale.o: src/interface/FenetrePrincipale.cpp include/interface/FenetrePrincipale.hpp \
 		include/interface/SceneCarte.hpp \
+		lib/libBDD/include/Carte.hpp \
+		lib/libBDD/include/Ville.hpp \
+		lib/libBDD/include/Waypoint.hpp \
+		lib/libBDD/include/Route.hpp \
+		lib/libBDD/include/Contour.hpp \
+		lib/libBDD/include/Point.hpp \
 		include/interface/MiniVue.hpp \
 		include/interface/GrandeVue.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o FenetrePrincipale.o src/interface/FenetrePrincipale.cpp
 
 GrandeVue.o: src/interface/GrandeVue.cpp include/interface/GrandeVue.hpp \
-		include/interface/SceneCarte.hpp
+		include/interface/SceneCarte.hpp \
+		lib/libBDD/include/Carte.hpp \
+		lib/libBDD/include/Ville.hpp \
+		lib/libBDD/include/Waypoint.hpp \
+		lib/libBDD/include/Route.hpp \
+		lib/libBDD/include/Contour.hpp \
+		lib/libBDD/include/Point.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o GrandeVue.o src/interface/GrandeVue.cpp
 
 main.o: src/interface/main.cpp include/interface/FenetrePrincipale.hpp \
 		include/interface/SceneCarte.hpp \
+		lib/libBDD/include/Carte.hpp \
+		lib/libBDD/include/Ville.hpp \
+		lib/libBDD/include/Waypoint.hpp \
+		lib/libBDD/include/Route.hpp \
+		lib/libBDD/include/Contour.hpp \
+		lib/libBDD/include/Point.hpp \
 		include/interface/MiniVue.hpp \
-		include/interface/GrandeVue.hpp
+		include/interface/GrandeVue.hpp \
+		lib/libBDD/include/Bdd.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o src/interface/main.cpp
 
 MiniVue.o: src/interface/MiniVue.cpp include/interface/MiniVue.hpp \
-		include/interface/SceneCarte.hpp
+		include/interface/SceneCarte.hpp \
+		lib/libBDD/include/Carte.hpp \
+		lib/libBDD/include/Ville.hpp \
+		lib/libBDD/include/Waypoint.hpp \
+		lib/libBDD/include/Route.hpp \
+		lib/libBDD/include/Contour.hpp \
+		lib/libBDD/include/Point.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MiniVue.o src/interface/MiniVue.cpp
 
-SceneCarte.o: src/interface/SceneCarte.cpp 
+SceneCarte.o: src/interface/SceneCarte.cpp include/interface/SceneCarte.hpp \
+		lib/libBDD/include/Carte.hpp \
+		lib/libBDD/include/Ville.hpp \
+		lib/libBDD/include/Waypoint.hpp \
+		lib/libBDD/include/Route.hpp \
+		lib/libBDD/include/Contour.hpp \
+		lib/libBDD/include/Point.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SceneCarte.o src/interface/SceneCarte.cpp
 
 moc_FenetrePrincipale.o: moc_FenetrePrincipale.cpp 

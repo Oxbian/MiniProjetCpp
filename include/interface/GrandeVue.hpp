@@ -1,6 +1,7 @@
 #ifndef GRANDEVUE_HPP
 #define GRANDEVUE_HPP
 
+/* Importation des headers nécessaires */
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QWheelEvent>
@@ -9,6 +10,7 @@
 
 #include "SceneCarte.hpp"
 
+/* Classe GrandeVue */
 class GrandeVue: public QGraphicsView
 {
     Q_OBJECT
@@ -27,11 +29,12 @@ private:
     void wheelEvent(QWheelEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
-    void drawForeground(QPainter *painter, const QRectF &) override;
-    void drawBackground(QPainter *painter, const QRectF &) override;
+    void drawForeground(QPainter *painter, const QRectF &zoomed_zone) override;
+    void drawBackground(QPainter *painter, const QRectF &zoomed_zone) override;
 
 private:
     int orientation_nord;
+
 };
 
 #endif // GRANDEVUE_HPP

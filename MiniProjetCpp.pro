@@ -26,4 +26,7 @@ SOURCES += src/interface/FenetrePrincipale.cpp \
 QT += widgets
 QMAKE_CXXFLAGS += -std=c++14
 INCLUDEPATH += "include" \
-               "include/interface"
+               "include/interface" \
+               "lib/libBDD/include"
+LIBS += lib/libBDD/libBDD.a
+LIBS += -lmysqlcppconn

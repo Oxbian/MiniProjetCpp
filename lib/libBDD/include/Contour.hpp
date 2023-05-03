@@ -17,6 +17,8 @@ public:
 	Contour(){};
 	Contour(Point p1, Point p2);
 	~Contour(){};
+
+public:
 	std::vector<Point> getPoints();
 	void ajoutUnPoint(Point point);
 

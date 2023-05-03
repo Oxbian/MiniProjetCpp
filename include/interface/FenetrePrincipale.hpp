@@ -1,6 +1,7 @@
 #ifndef FENETREPRINCIPALE_HPP
 #define FENETREPRINCIPALE_HPP
 
+/* Importation des headers nécessaires */
 #include <QMainWindow>
 #include <QApplication>
 #include <QObject>
@@ -17,21 +18,28 @@
 #include "SceneCarte.hpp"
 #include "MiniVue.hpp"
 #include "GrandeVue.hpp"
+#include "Carte.hpp"
 
+/* Constantes */
 #define WIDTH 800
 #define HEIGHT 600
 
+/* Classe FenetrePrincipale */
 class FenetrePrincipale: public QMainWindow
 {
     Q_OBJECT
+
 public:
-    FenetrePrincipale(QWidget *parent = nullptr);
-    virtual ~FenetrePrincipale() {};
+    FenetrePrincipale(Carte &carte, QWidget *parent = nullptr);
+    virtual ~FenetrePrincipale(){};
+
 public slots:
     void affiche_pos_scene(QPointF pos);
     void calculate_dist();
+
 private:
     QGroupBox *createLeftSide();
+
 private:
     QWidget *central_widget;
     SceneCarte *scene;
@@ -41,6 +49,7 @@ private:
     QLineEdit *depart_edit;
     QLineEdit *arrivee_edit;
     QPushButton *calculate_btn;
+
 };
 
 #endif // FENETREPRINCIPALE_HPP
