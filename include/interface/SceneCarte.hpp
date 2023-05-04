@@ -3,8 +3,10 @@
 
 /* Importation des headers nécessaires */
 #include <QGraphicsScene>
+#include <QGraphicsLineItem>
 #include <QObject>
 #include "Carte.hpp"
+#include "Point.hpp"
 
 /* Classe SceneCarte */
 class SceneCarte: public QGraphicsScene
@@ -13,8 +15,14 @@ class SceneCarte: public QGraphicsScene
 
 public:
     SceneCarte(Carte &carte);
-    virtual ~SceneCarte() {};
-    void creerScene(Carte &carte);
+    virtual ~SceneCarte(){};
+
+public:
+    void creerContour(Carte &carte);
+
+private:
+    static std::map<std::string, QColor> tab_couleurs;
+
 };
 
 #endif // SCENE_HPP

@@ -16,7 +16,7 @@ CC            = gcc
 CXX           = g++
 DEFINES       = -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -std=c++14 -O2 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
+CXXFLAGS      = -pipe -std=c++14 -g -O2 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 INCPATH       = -I. -I. -Iinclude -Iinclude/interface -Ilib/libBDD/include -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
 QMAKE         = /usr/lib/qt5/bin/qmake
 DEL_FILE      = rm -f
@@ -56,19 +56,23 @@ SOURCES       = src/interface/FenetrePrincipale.cpp \
 		src/interface/GrandeVue.cpp \
 		src/interface/main.cpp \
 		src/interface/MiniVue.cpp \
-		src/interface/SceneCarte.cpp moc_FenetrePrincipale.cpp \
+		src/interface/SceneCarte.cpp \
+		src/interface/LoginDialog.cpp moc_FenetrePrincipale.cpp \
 		moc_GrandeVue.cpp \
 		moc_MiniVue.cpp \
-		moc_SceneCarte.cpp
+		moc_SceneCarte.cpp \
+		moc_LoginDialog.cpp
 OBJECTS       = FenetrePrincipale.o \
 		GrandeVue.o \
 		main.o \
 		MiniVue.o \
 		SceneCarte.o \
+		LoginDialog.o \
 		moc_FenetrePrincipale.o \
 		moc_GrandeVue.o \
 		moc_MiniVue.o \
-		moc_SceneCarte.o
+		moc_SceneCarte.o \
+		moc_LoginDialog.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -149,11 +153,13 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		MiniProjetCpp.pro include/interface/FenetrePrincipale.hpp \
 		include/interface/GrandeVue.hpp \
 		include/interface/MiniVue.hpp \
-		include/interface/SceneCarte.hpp src/interface/FenetrePrincipale.cpp \
+		include/interface/SceneCarte.hpp \
+		include/interface/LoginDialog.hpp src/interface/FenetrePrincipale.cpp \
 		src/interface/GrandeVue.cpp \
 		src/interface/main.cpp \
 		src/interface/MiniVue.cpp \
-		src/interface/SceneCarte.cpp
+		src/interface/SceneCarte.cpp \
+		src/interface/LoginDialog.cpp
 QMAKE_TARGET  = MiniProjetCpp
 DESTDIR       = 
 TARGET        = MiniProjetCpp
@@ -337,8 +343,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents include/interface/FenetrePrincipale.hpp include/interface/GrandeVue.hpp include/interface/MiniVue.hpp include/interface/SceneCarte.hpp $(DISTDIR)/
-	$(COPY_FILE) --parents src/interface/FenetrePrincipale.cpp src/interface/GrandeVue.cpp src/interface/main.cpp src/interface/MiniVue.cpp src/interface/SceneCarte.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents include/interface/FenetrePrincipale.hpp include/interface/GrandeVue.hpp include/interface/MiniVue.hpp include/interface/SceneCarte.hpp include/interface/LoginDialog.hpp $(DISTDIR)/
+	$(COPY_FILE) --parents src/interface/FenetrePrincipale.cpp src/interface/GrandeVue.cpp src/interface/main.cpp src/interface/MiniVue.cpp src/interface/SceneCarte.cpp src/interface/LoginDialog.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -368,11 +374,11 @@ compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
-	g++ -pipe -std=c++14 -O2 -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
+	g++ -pipe -std=c++14 -g -O2 -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_FenetrePrincipale.cpp moc_GrandeVue.cpp moc_MiniVue.cpp moc_SceneCarte.cpp
+compiler_moc_header_make_all: moc_FenetrePrincipale.cpp moc_GrandeVue.cpp moc_MiniVue.cpp moc_SceneCarte.cpp moc_LoginDialog.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_FenetrePrincipale.cpp moc_GrandeVue.cpp moc_MiniVue.cpp moc_SceneCarte.cpp
+	-$(DEL_FILE) moc_FenetrePrincipale.cpp moc_GrandeVue.cpp moc_MiniVue.cpp moc_SceneCarte.cpp moc_LoginDialog.cpp
 moc_FenetrePrincipale.cpp: include/interface/FenetrePrincipale.hpp \
 		include/interface/SceneCarte.hpp \
 		lib/libBDD/include/Carte.hpp \
@@ -422,6 +428,11 @@ moc_SceneCarte.cpp: include/interface/SceneCarte.hpp \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/kali/Documents/Qt/MiniProjetCpp/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp/include -I/home/kali/Documents/Qt/MiniProjetCpp/include/interface -I/home/kali/Documents/Qt/MiniProjetCpp/lib/libBDD/include -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include include/interface/SceneCarte.hpp -o moc_SceneCarte.cpp
 
+moc_LoginDialog.cpp: include/interface/LoginDialog.hpp \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/kali/Documents/Qt/MiniProjetCpp/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp/include -I/home/kali/Documents/Qt/MiniProjetCpp/include/interface -I/home/kali/Documents/Qt/MiniProjetCpp/lib/libBDD/include -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include include/interface/LoginDialog.hpp -o moc_LoginDialog.cpp
+
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
@@ -470,6 +481,7 @@ main.o: src/interface/main.cpp include/interface/FenetrePrincipale.hpp \
 		lib/libBDD/include/Point.hpp \
 		include/interface/MiniVue.hpp \
 		include/interface/GrandeVue.hpp \
+		include/interface/LoginDialog.hpp \
 		lib/libBDD/include/Bdd.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o src/interface/main.cpp
 
@@ -492,6 +504,9 @@ SceneCarte.o: src/interface/SceneCarte.cpp include/interface/SceneCarte.hpp \
 		lib/libBDD/include/Point.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SceneCarte.o src/interface/SceneCarte.cpp
 
+LoginDialog.o: src/interface/LoginDialog.cpp include/interface/LoginDialog.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o LoginDialog.o src/interface/LoginDialog.cpp
+
 moc_FenetrePrincipale.o: moc_FenetrePrincipale.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_FenetrePrincipale.o moc_FenetrePrincipale.cpp
 
@@ -503,6 +518,9 @@ moc_MiniVue.o: moc_MiniVue.cpp
 
 moc_SceneCarte.o: moc_SceneCarte.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_SceneCarte.o moc_SceneCarte.cpp
+
+moc_LoginDialog.o: moc_LoginDialog.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_LoginDialog.o moc_LoginDialog.cpp
 
 ####### Install
 

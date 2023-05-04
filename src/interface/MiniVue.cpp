@@ -3,9 +3,9 @@
 /**
  * @brief Constructeur de MiniVue
  * @param scene Scène à afficher dans la minivue
- * @param w Pointeur vers le widget parent
+ * @param parent Pointeur vers le widget parent
  */
-MiniVue::MiniVue(SceneCarte *scene, QWidget *w): QGraphicsView(scene, w)
+MiniVue::MiniVue(SceneCarte *scene, QWidget *parent): QGraphicsView(scene, parent)
 {
     Q_UNUSED(scene);
     scale(1, -1); // Inversion des Y
@@ -17,6 +17,7 @@ MiniVue::MiniVue(SceneCarte *scene, QWidget *w): QGraphicsView(scene, w)
  */
 void MiniVue::resizeEvent(QResizeEvent *event)
 {
+    Q_UNUSED(event);
     if (this->transform().m11() == 1) {
         this->fitInView(sceneRect(), Qt::KeepAspectRatio);
     }
@@ -25,17 +26,18 @@ void MiniVue::resizeEvent(QResizeEvent *event)
 /**
  * @brief Fonction qui dessine la zone de zoom de Grande Vue
  * @param painter Painter pour dessiner
- * @param zoomed_zone Zone de zoom de Grande Vue
+ * @param draw_zone Zone de dessin
  */
-void MiniVue::drawForeground(QPainter *painter, const QRectF &zoomed_zone)
+void MiniVue::drawForeground(QPainter *painter, const QRectF &draw_zone)
 {
+    Q_UNUSED(draw_zone);
     painter->setPen(QPen(Qt::black, 0));
     painter->drawRect(this->zoomed_zone);
 }
 
 /**
  * @brief Signal qui récupère la zone de zoom de Grande Vue
- * @param zoomed_zone 
+ * @param zoomed_zone Zone de zoom de Grande Vue
  */
 void MiniVue::draw_viewport(QRectF zoomed_zone)
 {

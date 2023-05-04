@@ -16,12 +16,12 @@ class MiniVue: public QGraphicsView
     Q_OBJECT
 
 public:
-    MiniVue(SceneCarte *scene, QWidget *w);
-    virtual ~MiniVue() {};
+    MiniVue(SceneCarte *scene, QWidget *parent);
+    virtual ~MiniVue(){};
 
 private:
     void resizeEvent(QResizeEvent *event) override;
-    void drawForeground(QPainter *painter, const QRectF &zoomed_zone) override;
+    void drawForeground(QPainter *painter, const QRectF &draw_zone) override;
 
 public slots:
     void draw_viewport(QRectF zoomed_zone);

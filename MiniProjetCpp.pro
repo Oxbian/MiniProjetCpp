@@ -17,14 +17,18 @@ INCLUDEPATH += .
 HEADERS += include/interface/FenetrePrincipale.hpp \
            include/interface/GrandeVue.hpp \
            include/interface/MiniVue.hpp \
-           include/interface/SceneCarte.hpp
+           include/interface/SceneCarte.hpp \
+           include/interface/LoginDialog.hpp
+
 SOURCES += src/interface/FenetrePrincipale.cpp \
            src/interface/GrandeVue.cpp \
            src/interface/main.cpp \
            src/interface/MiniVue.cpp \
-           src/interface/SceneCarte.cpp
+           src/interface/SceneCarte.cpp \
+           src/interface/LoginDialog.cpp
+           
 QT += widgets
-QMAKE_CXXFLAGS += -std=c++14
+QMAKE_CXXFLAGS += -std=c++14 -g
 INCLUDEPATH += "include" \
                "include/interface" \
                "lib/libBDD/include"

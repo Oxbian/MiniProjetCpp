@@ -3,11 +3,11 @@
 /**
  * @brief Constructeur de GrandeVue
  * @param scene Scène à afficher dans la vue
- * @param w Pointeur du widget parent
+ * @param parent Pointeur du widget parent
  * @param orientation_nord Int pour indiquer l'orientation du nord
  */
-GrandeVue::GrandeVue(SceneCarte *scene, QWidget *w, int orientation_nord): 
-QGraphicsView(scene, w), orientation_nord(orientation_nord)
+GrandeVue::GrandeVue(SceneCarte *scene, QWidget *parent, int orientation_nord): 
+QGraphicsView(scene, parent), orientation_nord(orientation_nord)
 {
     Q_UNUSED(scene);
     scale(1, -1); // Inversion des Y
@@ -21,6 +21,7 @@ QGraphicsView(scene, w), orientation_nord(orientation_nord)
  */
 void GrandeVue::resizeEvent(QResizeEvent *event)
 {
+    Q_UNUSED(event);
     if (this->transform().m11() == 1) {
         this->fitInView(sceneRect(), Qt::KeepAspectRatio);
     }
@@ -39,7 +40,7 @@ void GrandeVue::wheelEvent(QWheelEvent *event)
     } else {
         facteur_zoom = 0.9;
     }
-    centerOn(mapToScene(event->pos()));
+    centerOn(mapToScene(event->position().toPoint()));
     scale(facteur_zoom, facteur_zoom);
 }
 
@@ -74,11 +75,12 @@ void GrandeVue::mouseMoveEvent(QMouseEvent *event)
 
 /**
  * @brief Fonction pour dessiner la flèche d'orientation sur la carte
- * @param painter Zone de dessin
- * @param zoomed_zone Zone zoomée
+ * @param painter Painter pour dessiner
+ * @param draw_zone Zone de dessin
  */
-void GrandeVue::drawBackground(QPainter *painter, const QRectF &zoomed_zone)
+void GrandeVue::drawBackground(QPainter *painter, const QRectF &draw_zone)
 {
+    Q_UNUSED(draw_zone);
     painter->setWorldMatrixEnabled(false); // mettre en coords View (pixels)
 
     // Chargement image et rotation selon orientation plan
@@ -93,11 +95,12 @@ void GrandeVue::drawBackground(QPainter *painter, const QRectF &zoomed_zone)
 
 /**
  * @brief Fonction pour dessiner l'échelle sur la carte
- * @param painter Zone de dessin
- * @param zoomed_zone Zone zoomée
+ * @param painter Painter pour dessiner
+ * @param draw_zone Zone de dessin
  */
-void GrandeVue::drawForeground(QPainter *painter, const QRectF &zoomed_zone)
+void GrandeVue::drawForeground(QPainter *painter, const QRectF &draw_zone)
 {
+    Q_UNUSED(draw_zone);
     painter->setWorldMatrixEnabled(false);// mettre en coords View (pixels)
     painter->setPen(QPen(Qt::black, 0));
     qreal echelle = this->transform().m11();

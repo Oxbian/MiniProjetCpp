@@ -16,8 +16,8 @@ class GrandeVue: public QGraphicsView
     Q_OBJECT
 
 public:
-    GrandeVue(SceneCarte *scene, QWidget *w, int orientation_nord);
-    virtual ~GrandeVue() {};
+    GrandeVue(SceneCarte *scene, QWidget *parent, int orientation_nord);
+    virtual ~GrandeVue(){};
 
 signals:
     void zoom_changed(QRectF zoomed_zone);
@@ -29,8 +29,8 @@ private:
     void wheelEvent(QWheelEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
-    void drawForeground(QPainter *painter, const QRectF &zoomed_zone) override;
-    void drawBackground(QPainter *painter, const QRectF &zoomed_zone) override;
+    void drawForeground(QPainter *painter, const QRectF &draw_zone) override;
+    void drawBackground(QPainter *painter, const QRectF &draw_zone) override;
 
 private:
     int orientation_nord;

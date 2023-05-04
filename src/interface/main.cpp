@@ -1,17 +1,27 @@
-#include <QApplication>
-#include <QMessageBox>
 #include "FenetrePrincipale.hpp"
+#include "LoginDialog.hpp"
 #include "Bdd.hpp"
 
 int main(int argc, char **argv)
 {
 	/* Chargemennt de Qt */
     QApplication app(argc, argv);
+	LoginDialog dlg;
     Carte carte;
+
+	/* Ouverture de la boite de dialogue de login à la BDD */
+	std::string host, database, username, password;
+	if (dlg.exec()) {
+		dlg.getResult(host, database, username, password);
+	}
+	else {
+		std::cout << "Erreur lors de l'ouverture de la boite de dialogue de login à la BDD" << std::endl;
+		return 1;
+	}
 
 	/* Connexion à la base de données */
     try {
-		Bdd bdd("tcp://localhost:3306", "miniprojet", "miniprojet", "miniprojet");
+		Bdd bdd("tcp://" + host + ":3306", database, username, password);
 	    carte = bdd.creerCarte();
 		std::cout << "Carte créée" << std::endl;
 	}
