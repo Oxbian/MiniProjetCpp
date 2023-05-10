@@ -4,7 +4,10 @@
 /* Importation des headers nécessaires */
 #include <QGraphicsScene>
 #include <QGraphicsLineItem>
+#include <QMessageBox>
+
 #include <QObject>
+#include <string>
 #include "Carte.hpp"
 #include "Point.hpp"
 

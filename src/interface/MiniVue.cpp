@@ -31,7 +31,7 @@ void MiniVue::resizeEvent(QResizeEvent *event)
 void MiniVue::drawForeground(QPainter *painter, const QRectF &draw_zone)
 {
     Q_UNUSED(draw_zone);
-    painter->setPen(QPen(Qt::black, 0));
+    painter->setPen(QPen(Qt::red, 0));
     painter->drawRect(this->zoomed_zone);
 }
 

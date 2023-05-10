@@ -43,7 +43,7 @@ Contour Carte::getContour()
  */
 float Carte::getEchelleLon()
 {
-    return cos(48);
+    return cos(48*M_PI/180);
 }
 
 /**
