@@ -13,8 +13,7 @@ int main(int argc, char **argv)
 	std::string host, database, username, password;
 	if (dlg.exec()) {
 		dlg.getResult(host, database, username, password);
-	}
-	else {
+	} else {
 		std::cout << "Erreur lors de l'ouverture de la boite de dialogue de login à la BDD" << std::endl;
 		return 1;
 	}
@@ -24,13 +23,11 @@ int main(int argc, char **argv)
 		Bdd bdd("tcp://" + host + ":3306", database, username, password);
 	    carte = bdd.creerCarte();
 		std::cout << "Carte créée" << std::endl;
-	}
-	catch (sql::SQLException &e) {
+	} catch (sql::SQLException &e) {
 		std::cout << "# ERR: " << e.what();
 		std::cout << " (MySQL error code: " << e.getErrorCode();
 		std::cout << ", SQLState: " << e.getSQLState() << " )" << std::endl;
-	}
-	catch(...){
+	} catch(...){
 		std::cout << "Exception non trappée" <<std::endl;
 	}
 

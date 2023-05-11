@@ -7,13 +7,11 @@ int main (int argc, char *argv[])
 		Carte carte = bdd.creerCarte();
 		std::cout << "Carte créée" << std::endl;
 		carte.affiche();
-	}
-	catch (sql::SQLException &e) {
+	} catch (sql::SQLException &e) {
 		std::cout << "# ERR: " << e.what();
 		std::cout << " (MySQL error code: " << e.getErrorCode();
 		std::cout << ", SQLState: " << e.getSQLState() << " )" << std::endl;
-	}
-	catch(...){
+	} catch(...){
 		std::cout << "Exception non trappée" <<std::endl;
 	}
 	return EXIT_SUCCESS;

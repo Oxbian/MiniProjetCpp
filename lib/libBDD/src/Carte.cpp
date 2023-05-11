@@ -71,10 +71,8 @@ std::vector<Route> Carte::getRoutes()
 std::vector<std::string> Carte::getnomsVilles()
 {
     std::vector<std::string> noms_villes;
-    for (Waypoint *waypoint : this->waypoints)
-    {
-        if (waypoint->isVille())
-        {
+    for (Waypoint *waypoint : this->waypoints) {
+        if (waypoint->isVille()) {
             noms_villes.push_back(waypoint->getNom());
         }
     }
@@ -115,18 +113,15 @@ void Carte::affiche()
 {
     std::cout << "Carte:" << std::endl;
     std::cout << "Contour:" << std::endl;
-    for (Point point : this->contour.getPoints())
-    {
+    for (Point point : this->contour.getPoints()) {
         std::cout << "Point:\n" << "Latitude: " << point.getLat() << "\nLongitude: " << point.getLon() << std::endl;
     }
     std::cout << "Waypoints:" << std::endl;
-    for (Waypoint *waypoint : this->waypoints)
-    {
+    for (Waypoint *waypoint : this->waypoints) {
         waypoint->affiche();
     }
     std::cout << "Routes:" << std::endl;
-    for (Route route : this->routes)
-    {
+    for (Route route : this->routes) {
         route.affiche();
     }
 }
