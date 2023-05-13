@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 		dlg.getResult(host, database, username, password);
 	} else {
 		std::cout << "Erreur lors de l'ouverture de la boite de dialogue de login à la BDD" << std::endl;
-		return 1;
+		return -1;
 	}
 
 	/* Connexion à la base de données */
@@ -23,6 +23,7 @@ int main(int argc, char **argv)
 		Bdd bdd("tcp://" + host + ":3306", database, username, password);
 	    carte = bdd.creerCarte();
 		std::cout << "Carte créée" << std::endl;
+		std::cout << "Graphe créé" << std::endl;
 	} catch (sql::SQLException &e) {
 		std::cout << "# ERR: " << e.what();
 		std::cout << " (MySQL error code: " << e.getErrorCode();
@@ -31,8 +32,10 @@ int main(int argc, char **argv)
 		std::cout << "Exception non trappée" <<std::endl;
 	}
 
+	Graphe graphe(carte);
+
 	/* Création de la fenêtre et affichage de l'interface */
-    FenetrePrincipale mw (carte);
+    FenetrePrincipale mw (carte, graphe);
     mw.show();
     return app.exec();
 }

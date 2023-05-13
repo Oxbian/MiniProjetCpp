@@ -15,7 +15,7 @@ NAME        := libBDD.a
 # CPPFLAGS  preprocessor flags
 
 SRC_DIR     := src
-SRCS        := Point.cpp Route.cpp Contour.cpp Waypoint.cpp Ville.cpp Carte.cpp Bdd.cpp
+SRCS        := Point.cpp Route.cpp Contour.cpp Waypoint.cpp Ville.cpp Carte.cpp Bdd.cpp Graphe.cpp
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)
 
 BUILD_DIR   := .build

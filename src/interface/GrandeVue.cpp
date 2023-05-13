@@ -6,9 +6,9 @@
  * @param parent Pointeur du widget parent
  * @param orientation_nord Int pour indiquer l'orientation du nord
  */
-GrandeVue::GrandeVue(SceneCarte *scene, QWidget *parent, int orientation_nord): 
-QGraphicsView(scene, parent), orientation_nord(orientation_nord)
+GrandeVue::GrandeVue(SceneCarte *scene, QWidget *parent, int orientation_nord): QGraphicsView(scene, parent)
 {
+    this->orientation_nord = orientation_nord;
     Q_UNUSED(scene);
     scale(1, -1); // Inversion des Y
     setMouseTracking(true);

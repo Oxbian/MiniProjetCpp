@@ -22,6 +22,7 @@ public:
 
 public:
     void creerContour(Carte &carte);
+    void draw_path(std::vector<Route> chemin, Carte &carte);
 
 private:
     static std::map<std::string, QColor> tab_couleurs;

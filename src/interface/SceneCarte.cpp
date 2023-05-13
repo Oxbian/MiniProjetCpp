@@ -27,9 +27,6 @@ SceneCarte::SceneCarte(Carte &carte):QGraphicsScene()
 
 void SceneCarte::creerContour(Carte &carte)
 {
-    this->setBackgroundBrush(Qt::blue);
-    carte.affiche(); // DEBUG
-
     qreal epais = 0; // Epaisseur des traits
     std::string text_tooltip;
 
@@ -64,8 +61,29 @@ void SceneCarte::creerContour(Carte &carte)
     }
 
     /* Dessin des routes */
-    couleur = tab_couleurs["blanc"];
+    couleur = tab_couleurs["noir"];
     for (auto &route : carte.getRoutes()) {
+        text_tooltip = "Route " + waypoints[route.getIDeb()]->getNom() + " - " + waypoints[route.getIFin()]->getNom() + "\nDistance: " + std::to_string(route.getDistance());
+        this->addLine(waypoints[route.getIDeb()]->getLat(), waypoints[route.getIDeb()]->getLon(), 
+         waypoints[route.getIFin()]->getLat(), waypoints[route.getIFin()]->getLon(), 
+         QPen(couleur, epais, Qt::SolidLine))->setToolTip(QString::fromStdString(text_tooltip));
+    }
+}
+
+/**
+ * @brief Fonction pour dessiner le chemin à prendre
+ * @param chemin Chemin à dessiner
+ * @param carte Référence vers la carte
+ */
+void SceneCarte::draw_path(std::vector<Route> chemin, Carte &carte)
+{
+    this->creerContour(carte);
+    qreal epais = 0.025; // Epaisseur des traits
+    QColor couleur = tab_couleurs["rouge"];
+    std::string text_tooltip;
+    
+    std::vector<Waypoint*> waypoints = carte.getWaypoints();
+    for (auto &route : chemin) {
         text_tooltip = "Route " + waypoints[route.getIDeb()]->getNom() + " - " + waypoints[route.getIFin()]->getNom() + "\nDistance: " + std::to_string(route.getDistance());
         this->addLine(waypoints[route.getIDeb()]->getLat(), waypoints[route.getIDeb()]->getLon(), 
          waypoints[route.getIFin()]->getLat(), waypoints[route.getIFin()]->getLon(), 

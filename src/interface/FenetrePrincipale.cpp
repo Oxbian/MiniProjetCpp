@@ -5,10 +5,12 @@
  * @param carte Référence vers la carte à afficher
  * @param parent Pointeur vers le widget parent (null)
  */
-FenetrePrincipale::FenetrePrincipale(Carte &carte, QWidget *parent): QMainWindow(parent)
+FenetrePrincipale::FenetrePrincipale(Carte &carte, Graphe &graphe, QWidget *parent): QMainWindow(parent)
 {
     this->setWindowTitle("Itinéraire");
     this->setMinimumSize(WIDTH, HEIGHT);
+    this->graphe = graphe;
+    this->carte = carte;
 
     /*  Layout & widget de la fenêtre principale */
     central_widget = new QWidget();
@@ -18,7 +20,7 @@ FenetrePrincipale::FenetrePrincipale(Carte &carte, QWidget *parent): QMainWindow
 
     /* Ajout des éléments de la fenêtre, avec la scène et les vues */
     this->scene = new SceneCarte(carte);
-    this->great_view = new GrandeVue(this->scene, this, 1);
+    this->great_view = new GrandeVue(this->scene, this, ORIENTATION_NORD);
     layout->addWidget(createLeftSide());
     layout->addWidget(this->great_view);
 
@@ -50,6 +52,8 @@ QGroupBox *FenetrePrincipale::createLeftSide()
 
     this->calculate_btn = new QPushButton("Calculer");
 
+    this->distance_label = new QLabel("Distance : ");
+
 	this->small_view = new MiniVue(this->scene, this);
 
 	vbox->addWidget(depart_label);
@@ -57,6 +61,7 @@ QGroupBox *FenetrePrincipale::createLeftSide()
 	vbox->addWidget(arrivee_label);
 	vbox->addWidget(this->arrivee_edit);
     vbox->addWidget(this->calculate_btn);
+    vbox->addWidget(this->distance_label);
 	vbox->addWidget(this->small_view);
 
 	return group;
@@ -68,9 +73,9 @@ QGroupBox *FenetrePrincipale::createLeftSide()
  */
 void FenetrePrincipale::affiche_pos_scene(QPointF pos)
 {
-    QString msg = "Coordonnées scène ("
-        + QString::number(pos.x(),'f',2) + ","
-        + QString::number(pos.y(),'f',2) + ")";
+    QString msg = "Coordonnées géographique : "
+        + convert_deg_to_dms(pos.y(), false) + " "
+        + convert_deg_to_dms(pos.x(), true);
     this->barre_status->showMessage(msg);
 }
 
@@ -84,5 +89,27 @@ void FenetrePrincipale::calculate_dist()
     QString arrivee_nom = this->arrivee_edit->text();
     QMessageBox::information(this, "info", "Vous avez recherchez la distance " 
     + depart_nom + " - " + arrivee_nom, QMessageBox::Ok);
-    // Appellé la fonction de calcul entre les deux villes
+    this->scene->clear();
+    std::vector<Route> chemin = this->graphe.plus_court_chemin(this->graphe.getWaypointID(depart_nom.toStdString()),
+     this->graphe.getWaypointID(arrivee_nom.toStdString()));
+    this->scene->draw_path(chemin, this->carte);
+    this->distance_label->setText("Distance : " + QString::number(chemin.back().getDistance()) + " km");
+}
+
+/**
+ * @brief Fonction pour convertir des degrés en degrés, minutes, secondes
+ * @param deg Degrés à convertir
+ * @param is_lat Booléen pour savoir si c'est une latitude ou une longitude
+ * @return La chaîne de caractère contenant la conversion
+ */
+QString FenetrePrincipale::convert_deg_to_dms(qreal deg, bool is_lat)
+{
+    deg = qAbs(deg);
+    int deg_int = (int)deg;
+    double min = (deg - deg_int) * 60;
+    int min_int = (int)min;
+    double sec = (min - min_int) * 60;
+    int sec_int = (int)sec;
+    QString direction = is_lat ? (deg > 0 ? "E" : "W") : (deg > 0 ? "N" : "S");
+    return QString::number(deg_int) + "°" + QString::number(min_int) + "." + QString::number(sec_int) + "\'" + direction;
 }
