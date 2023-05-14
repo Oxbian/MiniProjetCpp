@@ -9,24 +9,6 @@ Graphe::Graphe(Carte &carte)
 	this->carte = carte;
 }
 
-/**
- * @brief Retourne une liste des waypoints voisins
- * @param waypoint_id indice du waypoint ciblé
- * @return tableau des waypoints voisins
- */
-std::vector<int> Graphe::voisins(int waypoint_id)
-{
-	std::vector<int> voisins;
-	for (auto &route: this->carte.getRoutes()) {
-		if (route.getIDeb() == waypoint_id) {
-			voisins.push_back(route.getIFin());
-		}
-		else if (route.getIFin() == waypoint_id) {
-			voisins.push_back(route.getIDeb());
-		}
-	}
-	return voisins;
-}
 
 /**
  * @brief Calcul la distance entre 2 waypoints
@@ -56,27 +38,9 @@ std::vector<Route> Graphe::plus_court_chemin(int waypoint_1, int waypoint_2)
 		return std::vector<Route>();
 	}
 
-	std::vector<Route> chemin;
-	std::vector<int> wrong_way;
-	std::vector<int> deja_vu;
-
-	int end = waypoint_1;
-
-	while (end != waypoint_2) {
-		std::vector<int> voisins = this->voisins(end);
-		this->checkVoisins(voisins, deja_vu, wrong_way);
-
-		if (voisins.size() == 0) {
-			wrong_way.push_back(end);
-			end = deja_vu.back();
-			deja_vu.pop_back();
-			chemin.pop_back();
-		} else {
-			deja_vu.push_back(end);
-			end = minVoisin(voisins, end);
-			chemin.push_back(this->getRoute(end, deja_vu.back()));
-		}
-	}
+	// On récupère la matrice d'adjacence
+	std::vector<std::vector<int>> matrice = this->createMatrice();
+	std::vector<Route> chemin = this->Dijkstra(matrice, waypoint_1, waypoint_2);
 	return chemin;
 }
 
@@ -95,41 +59,6 @@ Route Graphe::getRoute(int waypoint_1, int waypoint_2)
 		}
 	}
 	return Route(-1, -1, -1); // Si la route n'existe pas
-}
-
-/**
- * @brief Fonction pour vérifier les voisins
- * @param voisins Liste d'indices des voisins
- * @param deja_vu Liste d'indices des waypoints déjà visités
- * @param wrong_way Liste d'indices des waypoints considérés comme mauvais chemins
- */
-void Graphe::checkVoisins(std::vector<int> &voisins, std::vector<int> &deja_vu, std::vector<int> &wrong_way)
-{
-	for (auto &voisin: voisins) {
-		// Vérification et suppression du voisin si déjà vu ou mauvais chemin
-		if (std::find(deja_vu.begin(), deja_vu.end(), voisin) != deja_vu.end()) {
-			voisins.erase(std::remove(voisins.begin(), voisins.end(), voisin), voisins.end());
-		} else if (std::find(wrong_way.begin(), wrong_way.end(), voisin) != wrong_way.end()) {
-			voisins.erase(std::remove(voisins.begin(), voisins.end(), voisin), voisins.end());
-		}
-	}
-}
-
-/**
- * @brief Fonction pour récupérer l'indice du voisin le plus proche
- * @param voisins Liste d'indices des voisins
- * @param waypoint Indice du waypoint actuel
- * @return Indice du voisin le plus proche
- */
-int Graphe::minVoisin(std::vector<int> &voisins, int waypoint)
-{
-	int min = 0;
-	for (std::vector<int>::size_type i = 0; i < voisins.size(); i++) {
-		if (this->distance(voisins[i], waypoint) < this->distance(voisins[min], waypoint)) {
-			min = i;
-		}
-	}
-	return voisins[min];
 }
 
 /**
@@ -160,4 +89,99 @@ int Graphe::getWaypointID(std::string nom)
 		}
 	}
 	return -1;
+}
+
+/**
+ * @brief Fonction pour créer la matrice d'adjacence
+ * @return Matrice d'adjacence
+ */
+std::vector<std::vector<int>> Graphe::createMatrice()
+{
+	std::vector<std::vector<int>> matrice_adjacence;
+	std::vector<Waypoint *> waypoints = this->carte.getWaypoints();
+	for (std::vector<Waypoint *>::size_type i = 0; i < waypoints.size(); i++) {
+		std::vector<int> ligne;
+		for (std::vector<Waypoint *>::size_type j = 0; j < waypoints.size(); j++) {
+			if (i == j) {
+				ligne.push_back(0);
+			} else {
+				int dist = this->distance(i, j);
+				if (dist == -1) {
+					ligne.push_back(INFINI);
+				} else {
+					ligne.push_back(dist);
+				}
+			}
+		}
+		matrice_adjacence.push_back(ligne);
+	}
+	return matrice_adjacence;
+}
+
+/**
+ * @brief Fonction pour trouvé le chemin le plus court entre 2 waypoints
+ * 
+ * @param graphe Matrice d'adjacence du graphe
+ * @param src Indice du waypoint de départ
+ * @param end Indice du waypoint de sortie
+ * @return Liste de routes à suivre
+ */
+std::vector<Route> Graphe::Dijkstra(std::vector<std::vector<int>> &graphe, int src, int end)
+{
+	std::vector<int> dist;
+	std::vector<int> prev;
+	std::vector<int> Q;
+	std::vector<Route> chemin;
+
+	for (std::vector<std::vector<int>>::size_type i = 0; i < graphe.size(); i++) {
+		dist.push_back(INFINI);
+		prev.push_back(-1);
+		Q.push_back(i);
+	}
+
+	dist[src] = 0;
+
+	while (Q.size() != 0) {
+		int u = this->minDist(dist, Q);
+		Q.erase(std::remove(Q.begin(), Q.end(), u), Q.end());
+
+		if (u == end) {
+			break;
+		}
+
+		for (std::vector<std::vector<int>>::size_type i = 0; i < graphe.size(); i++) {
+			if (std::find(Q.begin(), Q.end(), i) != Q.end()) {
+				int alt = dist[u] + graphe[u][i];
+				if (alt < dist[i]) {
+					dist[i] = alt;
+					prev[i] = u;
+				}
+			}
+		}
+	}
+
+	int u = end;
+	while (prev[u] != -1) {
+		chemin.push_back(this->getRoute(u, prev[u]));
+		u = prev[u];
+	}
+
+	return chemin;
+}
+
+/**
+ * @brief Fonction pour trouver le noeud le plus proche
+ * @param dist Vecteur des distances
+ * @param Q Vecteur des noeuds non visités
+ * @return Indice du noeud le plus proche
+ */
+int Graphe::minDist(std::vector<int> &dist, std::vector<int> &Q)
+{
+	int min = Q[0];
+	for (std::vector<int>::size_type i = 0; i < Q.size(); i++) {
+		if (dist[Q[i]] < dist[min]) {
+			min = Q[i];
+		}
+	}
+	return min;
 }

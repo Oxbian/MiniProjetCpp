@@ -90,10 +90,10 @@ void FenetrePrincipale::calculate_dist()
     QMessageBox::information(this, "info", "Vous avez recherchez la distance " 
     + depart_nom + " - " + arrivee_nom, QMessageBox::Ok);
     this->scene->clear();
-    std::vector<Route> chemin = this->graphe.plus_court_chemin(this->graphe.getWaypointID(depart_nom.toStdString()),
+	std::vector<Route> chemin = graphe.plus_court_chemin(this->graphe.getWaypointID(depart_nom.toStdString()),
      this->graphe.getWaypointID(arrivee_nom.toStdString()));
     this->scene->draw_path(chemin, this->carte);
-    this->distance_label->setText("Distance : " + QString::number(chemin.back().getDistance()) + " km");
+    this->distance_label->setText("Distance : " + QString::number(this->graphe.distTot(chemin)) + " km");
 }
 
 /**
