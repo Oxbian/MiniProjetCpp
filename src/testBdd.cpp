@@ -4,16 +4,15 @@
 int main (int argc, char *argv[]) 
 {
 	try {
+		/* Test connexion à la BDD */
 		Bdd bdd("tcp://localhost:3306", "miniprojet", "miniprojet", "miniprojet");
 		
+		/* Test création carte */
 		Carte carte = bdd.creerCarte();
 		std::cout << "Carte créée" << std::endl;
-		//carte.affiche();
+		carte.affiche();
 
-		// EASY 0 - 42
-		// HARD 5 - 17
-		// QCOMPLETER
-		// MODE NUIT CSS
+		/* Test création graphe & calcul chemin plus court*/
 		Graphe graphe(carte);
 		std::cout << "Graphe créé" << std::endl;
 		std::cout << "Calcul du plus court chemin entre: " << carte.getWaypoints()[5]->getNom() << " et " << carte.getWaypoints()[17]->getNom() << std::endl;
@@ -28,8 +27,10 @@ int main (int argc, char *argv[])
 		std::cout << "# ERR: " << e.what();
 		std::cout << " (MySQL error code: " << e.getErrorCode();
 		std::cout << ", SQLState: " << e.getSQLState() << " )" << std::endl;
+
 	} catch(...){
 		std::cout << "Exception non trappée" <<std::endl;
 	}
+	
 	return EXIT_SUCCESS;
 }

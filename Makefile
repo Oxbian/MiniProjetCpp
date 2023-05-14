@@ -389,6 +389,7 @@ moc_FenetrePrincipale.cpp: include/interface/FenetrePrincipale.hpp \
 		lib/libBDD/include/Point.hpp \
 		include/interface/MiniVue.hpp \
 		include/interface/GrandeVue.hpp \
+		lib/libBDD/include/Graphe.hpp \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/kali/Documents/Qt/MiniProjetCpp/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp -I/home/kali/Documents/Qt/MiniProjetCpp/include -I/home/kali/Documents/Qt/MiniProjetCpp/include/interface -I/home/kali/Documents/Qt/MiniProjetCpp/lib/libBDD/include -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include include/interface/FenetrePrincipale.hpp -o moc_FenetrePrincipale.cpp
@@ -458,7 +459,8 @@ FenetrePrincipale.o: src/interface/FenetrePrincipale.cpp include/interface/Fenet
 		lib/libBDD/include/Contour.hpp \
 		lib/libBDD/include/Point.hpp \
 		include/interface/MiniVue.hpp \
-		include/interface/GrandeVue.hpp
+		include/interface/GrandeVue.hpp \
+		lib/libBDD/include/Graphe.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o FenetrePrincipale.o src/interface/FenetrePrincipale.cpp
 
 GrandeVue.o: src/interface/GrandeVue.cpp include/interface/GrandeVue.hpp \
@@ -481,6 +483,7 @@ main.o: src/interface/main.cpp include/interface/FenetrePrincipale.hpp \
 		lib/libBDD/include/Point.hpp \
 		include/interface/MiniVue.hpp \
 		include/interface/GrandeVue.hpp \
+		lib/libBDD/include/Graphe.hpp \
 		include/interface/LoginDialog.hpp \
 		lib/libBDD/include/Bdd.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o src/interface/main.cpp

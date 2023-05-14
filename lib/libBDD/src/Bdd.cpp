@@ -107,6 +107,10 @@ std::vector<Route> Bdd::creerRoute(std::vector<Waypoint *> waypoints)
     return routes;
 }
 
+/**
+ * @brief Fonction pour créer une carte à partir de la base de donnée
+ * @return Carte créée
+ */
 Carte Bdd::creerCarte()
 {
     std::vector<Waypoint *> waypoints = creerWaypoints();

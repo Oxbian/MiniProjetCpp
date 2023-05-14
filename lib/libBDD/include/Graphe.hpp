@@ -32,6 +32,7 @@ public:
 	std::vector<std::vector<int>> createMatrice();
 	std::vector<Route> Dijkstra(std::vector<std::vector<int>> &graphe, int src, int end);
 	int minDist(std::vector<int> &dist, std::vector<int> &Q);
+	
 };
 
 #endif // GRAPHE_HPP

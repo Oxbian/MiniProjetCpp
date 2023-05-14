@@ -21,7 +21,7 @@ public:
     virtual ~SceneCarte(){};
 
 public:
-    void creerContour(Carte &carte);
+    void draw_map(Carte &carte);
     void draw_path(std::vector<Route> chemin, Carte &carte);
 
 private:

@@ -54,7 +54,6 @@ private:
     QLineEdit *arrivee_edit;
     QPushButton *calculate_btn;
     QLabel *distance_label;
-    QCompleter *completer;
     Graphe graphe;
     Carte carte;
 

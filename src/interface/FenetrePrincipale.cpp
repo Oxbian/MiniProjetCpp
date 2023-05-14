@@ -9,6 +9,8 @@ FenetrePrincipale::FenetrePrincipale(Carte &carte, Graphe &graphe, QWidget *pare
 {
     this->setWindowTitle("Itinéraire");
     this->setMinimumSize(WIDTH, HEIGHT);
+
+    /* Récupération des données */
     this->graphe = graphe;
     this->carte = carte;
 
@@ -38,6 +40,7 @@ FenetrePrincipale::FenetrePrincipale(Carte &carte, Graphe &graphe, QWidget *pare
  */
 QGroupBox *FenetrePrincipale::createLeftSide()
 {
+    /* Récupération des noms de villes pour l'autocomplétion*/
     std::vector<std::string> villes = this->carte.getnomsVilles();
     QStringList wordlist;
     for (auto &ville : villes)
@@ -45,8 +48,9 @@ QGroupBox *FenetrePrincipale::createLeftSide()
         wordlist << QString::fromStdString(ville);
     }
 
-    this->completer = new QCompleter(wordlist, this);
-    this->completer->setCaseSensitivity(Qt::CaseInsensitive);
+    /* Création des éléments du GroupBox de la partie gauche */
+    QCompleter *completer = new QCompleter(wordlist, this);
+    completer->setCaseSensitivity(Qt::CaseInsensitive);
 
     QGroupBox *group = new QGroupBox();
 	group->setMaximumWidth(WIDTH/3);
@@ -56,10 +60,12 @@ QGroupBox *FenetrePrincipale::createLeftSide()
 
 	QLabel *depart_label = new QLabel("Ville de départ");
     this->depart_edit = new QLineEdit();
-    this->depart_edit->setCompleter(completer);
 
 	QLabel *arrivee_label = new QLabel("Ville d'arrivée");
     this->arrivee_edit = new QLineEdit();
+
+    // Ajout de l'autocomplétion
+    this->depart_edit->setCompleter(completer);
     this->arrivee_edit->setCompleter(completer);
 
     this->calculate_btn = new QPushButton("Calculer");
@@ -97,13 +103,13 @@ void FenetrePrincipale::affiche_pos_scene(QPointF pos)
  */
 void FenetrePrincipale::calculate_dist()
 {
+    /* Récupération des villes de départ et d'arrivé */
     QString depart_nom = this->depart_edit->text();
     QString arrivee_nom = this->arrivee_edit->text();
-    QMessageBox::information(this, "info", "Vous avez recherchez la distance " 
-    + depart_nom + " - " + arrivee_nom, QMessageBox::Ok);
+
+    /* Clear de la carte et affichage de la route à suivre + distance */
     this->scene->clear();
-	std::vector<Route> chemin = graphe.plus_court_chemin(this->graphe.getWaypointID(depart_nom.toStdString()),
-     this->graphe.getWaypointID(arrivee_nom.toStdString()));
+	std::vector<Route> chemin = graphe.plus_court_chemin(this->graphe.getWaypointID(depart_nom.toStdString()), this->graphe.getWaypointID(arrivee_nom.toStdString()));
     this->scene->draw_path(chemin, this->carte);
     this->distance_label->setText("Distance : " + QString::number(this->graphe.distTot(chemin)) + " km");
 }
@@ -116,12 +122,16 @@ void FenetrePrincipale::calculate_dist()
  */
 QString FenetrePrincipale::convert_deg_to_dms(qreal deg, bool is_lat)
 {
-    deg = qAbs(deg);
-    int deg_int = (int)deg;
+    /* Calcul des degrés, minutes et secondes */
+    deg = abs(deg);
+    int deg_int = static_cast<int>(deg);
     double min = (deg - deg_int) * 60;
-    int min_int = (int)min;
+    int min_int = static_cast<int>(min);
     double sec = (min - min_int) * 60;
-    int sec_int = (int)sec;
+    int sec_int = static_cast<int>(sec);
+
+    /* Vérification si lat ou lon, et ajout des lettres correspondants */
     QString direction = is_lat ? (deg > 0 ? "E" : "W") : (deg > 0 ? "N" : "S");
-    return QString::number(deg_int) + "°" + QString::number(min_int) + "." + QString::number(sec_int) + "\'" + direction;
+    
+    return QString::number(abs(deg_int)) + "°" + QString::number(abs(min_int)) + "." + QString::number(abs(sec_int)) + "\'" + direction;
 }

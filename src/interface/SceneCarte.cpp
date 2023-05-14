@@ -22,15 +22,19 @@ std::map<std::string, QColor> SceneCarte::tab_couleurs = {
  */
 SceneCarte::SceneCarte(Carte &carte):QGraphicsScene()
 {
-    this->creerContour(carte);
+    this->draw_map(carte);
 }
 
-void SceneCarte::creerContour(Carte &carte)
+/**
+ * @brief Fonction pour dessiner la carte
+ * @param carte Référence vers la carte à dessiner
+ */
+void SceneCarte::draw_map(Carte &carte)
 {
     qreal epais = 0; // Epaisseur des traits
     std::string text_tooltip;
 
-    /* Dessin du contour de la carte */
+    /* Initialisation des paramètres & vérifications de la carte */
     QColor couleur = tab_couleurs["vert"];
     int nb_points = carte.getContour().getPoints().size();
     if (nb_points == 0) {
@@ -46,10 +50,10 @@ void SceneCarte::creerContour(Carte &carte)
     }
     this->addPolygon(poly, QPen(Qt::black, epais, Qt::SolidLine), QBrush(couleur, Qt::SolidPattern));
 
-    /* Dessin des waypoints */
+    /* Dessin des waypoints, si ville point cyan, sinon point rouge*/
     std::vector<Waypoint*> waypoints = carte.getWaypoints();
     for (auto &waypoint : waypoints) {
-        if (waypoint->isVille()) { // TODO: vérifier si c'est bien une ville et récupérer les données
+        if (dynamic_cast<Ville*>(waypoint)->isVille()) {
             couleur = tab_couleurs["cyan"];
             text_tooltip = waypoint->getInfos();
         } else {
@@ -64,8 +68,7 @@ void SceneCarte::creerContour(Carte &carte)
     couleur = tab_couleurs["noir"];
     for (auto &route : carte.getRoutes()) {
         text_tooltip = "Route " + waypoints[route.getIDeb()]->getNom() + " - " + waypoints[route.getIFin()]->getNom() + "\nDistance: " + std::to_string(route.getDistance());
-        this->addLine(waypoints[route.getIDeb()]->getLat(), waypoints[route.getIDeb()]->getLon(), 
-         waypoints[route.getIFin()]->getLat(), waypoints[route.getIFin()]->getLon(), 
+        this->addLine(waypoints[route.getIDeb()]->getLat(), waypoints[route.getIDeb()]->getLon(), waypoints[route.getIFin()]->getLat(), waypoints[route.getIFin()]->getLon(), 
          QPen(couleur, epais, Qt::SolidLine))->setToolTip(QString::fromStdString(text_tooltip));
     }
 }
@@ -77,7 +80,7 @@ void SceneCarte::creerContour(Carte &carte)
  */
 void SceneCarte::draw_path(std::vector<Route> chemin, Carte &carte)
 {
-    this->creerContour(carte);
+    this->draw_map(carte);
     qreal epais = 0.025; // Epaisseur des traits
     QColor couleur = tab_couleurs["rouge"];
     std::string text_tooltip;
@@ -85,8 +88,7 @@ void SceneCarte::draw_path(std::vector<Route> chemin, Carte &carte)
     std::vector<Waypoint*> waypoints = carte.getWaypoints();
     for (auto &route : chemin) {
         text_tooltip = "Route " + waypoints[route.getIDeb()]->getNom() + " - " + waypoints[route.getIFin()]->getNom() + "\nDistance: " + std::to_string(route.getDistance());
-        this->addLine(waypoints[route.getIDeb()]->getLat(), waypoints[route.getIDeb()]->getLon(), 
-         waypoints[route.getIFin()]->getLat(), waypoints[route.getIFin()]->getLon(), 
+        this->addLine(waypoints[route.getIDeb()]->getLat(), waypoints[route.getIDeb()]->getLon(), waypoints[route.getIFin()]->getLat(), waypoints[route.getIFin()]->getLon(), 
          QPen(couleur, epais, Qt::SolidLine))->setToolTip(QString::fromStdString(text_tooltip));
     }
 }

@@ -36,6 +36,7 @@ public:
     void ajoutUneRoute(Route route);
     void insereUneVille(Ville *ville);
     void affiche();
+    
 };
 
 #endif // CARTE_HPP

@@ -23,7 +23,6 @@ int main(int argc, char **argv)
 		Bdd bdd("tcp://" + host + ":3306", database, username, password);
 	    carte = bdd.creerCarte();
 		std::cout << "Carte créée" << std::endl;
-		std::cout << "Graphe créé" << std::endl;
 	} catch (sql::SQLException &e) {
 		std::cout << "# ERR: " << e.what();
 		std::cout << " (MySQL error code: " << e.getErrorCode();
@@ -33,6 +32,7 @@ int main(int argc, char **argv)
 	}
 
 	Graphe graphe(carte);
+	std::cout << "Graphe créé" << std::endl;
 
 	/* Création de la fenêtre et affichage de l'interface */
     FenetrePrincipale mw (carte, graphe);

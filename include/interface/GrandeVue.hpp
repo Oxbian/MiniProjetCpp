@@ -29,7 +29,6 @@ private:
     void wheelEvent(QWheelEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
-    void drawForeground(QPainter *painter, const QRectF &draw_zone) override;
     void drawBackground(QPainter *painter, const QRectF &draw_zone) override;
 
 private:
