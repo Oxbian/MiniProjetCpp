@@ -38,6 +38,16 @@ FenetrePrincipale::FenetrePrincipale(Carte &carte, Graphe &graphe, QWidget *pare
  */
 QGroupBox *FenetrePrincipale::createLeftSide()
 {
+    std::vector<std::string> villes = this->carte.getnomsVilles();
+    QStringList wordlist;
+    for (auto &ville : villes)
+    {
+        wordlist << QString::fromStdString(ville);
+    }
+
+    this->completer = new QCompleter(wordlist, this);
+    this->completer->setCaseSensitivity(Qt::CaseInsensitive);
+
     QGroupBox *group = new QGroupBox();
 	group->setMaximumWidth(WIDTH/3);
 
@@ -46,9 +56,11 @@ QGroupBox *FenetrePrincipale::createLeftSide()
 
 	QLabel *depart_label = new QLabel("Ville de départ");
     this->depart_edit = new QLineEdit();
+    this->depart_edit->setCompleter(completer);
 
 	QLabel *arrivee_label = new QLabel("Ville d'arrivée");
     this->arrivee_edit = new QLineEdit();
+    this->arrivee_edit->setCompleter(completer);
 
     this->calculate_btn = new QPushButton("Calculer");
 

@@ -14,6 +14,7 @@
 #include <QPushButton>
 #include <QMessageBox>
 #include <QStatusBar>
+#include <QCompleter>
 
 #include "SceneCarte.hpp"
 #include "MiniVue.hpp"
@@ -53,6 +54,7 @@ private:
     QLineEdit *arrivee_edit;
     QPushButton *calculate_btn;
     QLabel *distance_label;
+    QCompleter *completer;
     Graphe graphe;
     Carte carte;
 

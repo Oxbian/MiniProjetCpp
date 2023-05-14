@@ -9,7 +9,6 @@ Graphe::Graphe(Carte &carte)
 	this->carte = carte;
 }
 
-
 /**
  * @brief Calcul la distance entre 2 waypoints
  * @param waypoint_1 indice du waypoint de départ
@@ -183,5 +182,6 @@ int Graphe::minDist(std::vector<int> &dist, std::vector<int> &Q)
 			min = Q[i];
 		}
 	}
+	
 	return min;
 }
