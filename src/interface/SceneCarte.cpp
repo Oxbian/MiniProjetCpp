@@ -53,14 +53,16 @@ void SceneCarte::draw_map(Carte &carte)
     /* Dessin des waypoints, si ville point cyan, sinon point rouge*/
     std::vector<Waypoint*> waypoints = carte.getWaypoints();
     for (auto &waypoint : waypoints) {
-        if (dynamic_cast<Ville*>(waypoint)->isVille()) {
+        Ville* ville = static_cast<Ville*>(waypoint);
+        if (ville->isVille()) {
+            std::cout << "Ville: " << waypoint->getNom() << std::endl;
             couleur = tab_couleurs["cyan"];
-            text_tooltip = waypoint->getInfos();
+            text_tooltip = ville->getInfos();
         } else {
             couleur = tab_couleurs["rouge"];
             text_tooltip = waypoint->getInfos();
         }
-        this->addEllipse(waypoint->getLat()-0.0125, waypoint->getLon()-0.0125, 0.025, 0.025, 
+        this->addEllipse(waypoint->getLat()-TAILLE/2, waypoint->getLon()-TAILLE/2, TAILLE, TAILLE, 
         QPen(couleur, epais, Qt::SolidLine), QBrush(couleur, Qt::SolidPattern))->setToolTip(QString::fromStdString(text_tooltip));
     }
 
@@ -81,7 +83,7 @@ void SceneCarte::draw_map(Carte &carte)
 void SceneCarte::draw_path(std::vector<Route> chemin, Carte &carte)
 {
     this->draw_map(carte);
-    qreal epais = 0.025; // Epaisseur des traits
+    qreal epais = TAILLE; // Epaisseur des traits
     QColor couleur = tab_couleurs["rouge"];
     std::string text_tooltip;
     

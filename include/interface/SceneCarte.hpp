@@ -8,8 +8,12 @@
 
 #include <QObject>
 #include <string>
+#include <typeinfo>
 #include "Carte.hpp"
 #include "Point.hpp"
+
+/* Constantes */
+const int TAILLE = 0.025;
 
 /* Classe SceneCarte */
 class SceneCarte: public QGraphicsScene
