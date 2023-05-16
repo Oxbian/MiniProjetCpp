@@ -10,6 +10,10 @@
 #include <QMessageBox>
 #include <QString>
 
+/* Constantes */
+const int LOGIN_WIDTH = 300;
+const int LOGIN_HEIGHT = 200;
+
 /* Classe LoginDialog */
 class LoginDialog : public QDialog
 {

@@ -65,16 +65,14 @@ std::vector<Route> Carte::getRoutes()
 }
 
 /**
- * @brief Getter des noms des villes de la carte
- * @return Vecteur de noms de villes
+ * @brief Getter des noms des waypoints de la carte
+ * @return Vecteur de noms des waypoints
  */
 std::vector<std::string> Carte::getnomsVilles()
 {
     std::vector<std::string> noms_villes;
     for (Waypoint *waypoint : this->waypoints) {
-        if (waypoint->isVille()) {
-            noms_villes.push_back(waypoint->getNom());
-        }
+        noms_villes.push_back(waypoint->getNom());
     }
     return noms_villes;
 }

@@ -22,7 +22,7 @@ Bdd::Bdd(std::string host, std::string database, std::string user, std::string p
  */
 Bdd::~Bdd()
 {
-    std::cout << "Fermeture connection\n" << std::endl; 
+    std::cout << "Fermeture connexion\n" << std::endl; 
     delete this->conn;
 }
 
@@ -107,6 +107,10 @@ std::vector<Route> Bdd::creerRoute(std::vector<Waypoint *> waypoints)
     return routes;
 }
 
+/**
+ * @brief Fonction pour créer une carte à partir de la base de donnée
+ * @return Carte créée
+ */
 Carte Bdd::creerCarte()
 {
     std::vector<Waypoint *> waypoints = creerWaypoints();

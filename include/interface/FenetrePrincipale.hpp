@@ -14,15 +14,18 @@
 #include <QPushButton>
 #include <QMessageBox>
 #include <QStatusBar>
+#include <QCompleter>
 
 #include "SceneCarte.hpp"
 #include "MiniVue.hpp"
 #include "GrandeVue.hpp"
 #include "Carte.hpp"
+#include "Graphe.hpp"
 
 /* Constantes */
-#define WIDTH 800
-#define HEIGHT 600
+const int WIDTH = 800;
+const int HEIGHT = 600;
+const int ORIENTATION_NORD = 0;
 
 /* Classe FenetrePrincipale */
 class FenetrePrincipale: public QMainWindow
@@ -30,12 +33,13 @@ class FenetrePrincipale: public QMainWindow
     Q_OBJECT
 
 public:
-    FenetrePrincipale(Carte &carte, QWidget *parent = nullptr);
+    FenetrePrincipale(Carte &carte, Graphe &graphe, QWidget *parent = nullptr);
     virtual ~FenetrePrincipale(){};
 
 public slots:
     void affiche_pos_scene(QPointF pos);
     void calculate_dist();
+    QString convert_deg_to_dms(qreal deg, bool is_lat);
 
 private:
     QGroupBox *createLeftSide();
@@ -49,6 +53,9 @@ private:
     QLineEdit *depart_edit;
     QLineEdit *arrivee_edit;
     QPushButton *calculate_btn;
+    QLabel *distance_label;
+    Graphe graphe;
+    Carte carte;
 
 };
 

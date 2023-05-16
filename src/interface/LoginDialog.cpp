@@ -8,7 +8,7 @@ LoginDialog::LoginDialog(QWidget *parent) : QDialog(parent)
 {
     /* Info principales de la fenêtre */
     setWindowTitle("Connexion à la base de données");
-    setFixedSize(300, 200);
+    setFixedSize(LOGIN_WIDTH, LOGIN_HEIGHT);
 
     /* Création des QLineEdit */
     hostEdit = new QLineEdit("localhost");
