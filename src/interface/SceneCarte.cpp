@@ -53,16 +53,19 @@ void SceneCarte::draw_map(Carte &carte)
     /* Dessin des waypoints, si ville point cyan, sinon point rouge*/
     std::vector<Waypoint*> waypoints = carte.getWaypoints();
     for (auto &waypoint : waypoints) {
-        Ville* ville = static_cast<Ville*>(waypoint);
-        if (ville->isVille()) {
-            std::cout << "Ville: " << waypoint->getNom() << std::endl;
+
+        // Tentative RTTI, mais ne fonctionne pas
+        /*if (dynamic_cast<Ville *>(waypoint)) {
             couleur = tab_couleurs["cyan"];
-            text_tooltip = ville->getInfos();
+            text_tooltip = waypoint->getInfos();
         } else {
             couleur = tab_couleurs["rouge"];
             text_tooltip = waypoint->getInfos();
-        }
-        this->addEllipse(waypoint->getLat()-TAILLE/2, waypoint->getLon()-TAILLE/2, TAILLE, TAILLE, 
+        }*/
+
+        couleur = tab_couleurs["rouge"];
+        text_tooltip = waypoint->getInfos();
+        this->addEllipse(waypoint->getLat()-(TAILLE_POINT/2), waypoint->getLon()-(TAILLE_POINT/2), TAILLE_POINT, TAILLE_POINT, 
         QPen(couleur, epais, Qt::SolidLine), QBrush(couleur, Qt::SolidPattern))->setToolTip(QString::fromStdString(text_tooltip));
     }
 
@@ -83,10 +86,11 @@ void SceneCarte::draw_map(Carte &carte)
 void SceneCarte::draw_path(std::vector<Route> chemin, Carte &carte)
 {
     this->draw_map(carte);
-    qreal epais = TAILLE; // Epaisseur des traits
+    qreal epais = TAILLE_POINT; // Epaisseur des traits
     QColor couleur = tab_couleurs["rouge"];
     std::string text_tooltip;
     
+    /* Dessin du chemin à suivre entre les deux villes choisie */
     std::vector<Waypoint*> waypoints = carte.getWaypoints();
     for (auto &route : chemin) {
         text_tooltip = "Route " + waypoints[route.getIDeb()]->getNom() + " - " + waypoints[route.getIFin()]->getNom() + "\nDistance: " + std::to_string(route.getDistance());

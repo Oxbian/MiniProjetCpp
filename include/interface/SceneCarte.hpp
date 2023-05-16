@@ -11,9 +11,10 @@
 #include <typeinfo>
 #include "Carte.hpp"
 #include "Point.hpp"
+#include "Ville.hpp"
 
 /* Constantes */
-const int TAILLE = 0.025;
+const float TAILLE_POINT = 0.025;
 
 /* Classe SceneCarte */
 class SceneCarte: public QGraphicsScene

@@ -22,7 +22,7 @@ Bdd::Bdd(std::string host, std::string database, std::string user, std::string p
  */
 Bdd::~Bdd()
 {
-    std::cout << "Fermeture connection\n" << std::endl; 
+    std::cout << "Fermeture connexion\n" << std::endl; 
     delete this->conn;
 }
 
