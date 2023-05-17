@@ -11,10 +11,10 @@ LoginDialog::LoginDialog(QWidget *parent) : QDialog(parent)
     setFixedSize(LOGIN_WIDTH, LOGIN_HEIGHT);
 
     /* Création des QLineEdit */
-    hostEdit = new QLineEdit("localhost");
-    databaseEdit = new QLineEdit("miniprojet");
-    usernameEdit = new QLineEdit("miniprojet");
-    passwordEdit = new QLineEdit("miniprojet");
+    hostEdit = new QLineEdit("");
+    databaseEdit = new QLineEdit("");
+    usernameEdit = new QLineEdit("");
+    passwordEdit = new QLineEdit("");
     passwordEdit->setEchoMode(QLineEdit::Password);
 
     /* Création des boutons */
